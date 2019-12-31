@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/ontio/ontology-go-sdk"
 	cm "github.com/ontio/ontology/common"
+	"github.com/ontio/ontology/core/types"
 	"time"
 )
 
@@ -275,53 +276,53 @@ func deposit() {
 	fmt.Println(hash)
 }
 
-//// 注册默认地址ontid
-//func regOntId(passphrase string) {
-//	pin := []byte(passphrase)
-//
-//	//scrypt := keypair.GetScryptParameters()
-//	//identity, err := ontology_go_sdk.NewIdentity(scrypt)
-//	identity, err := wallet.NewDefaultSettingIdentity(pin)
-//	if err != nil {
-//		panic(err)
-//	}
-//
-//	controller, err := identity.GetControllerByIndex(1, pin)
-//	if err != nil {
-//		panic(err)
-//	}
-//	sender := ontology_go_sdk.NewAccount(controller.SigScheme)
-//
-//	pubkey := controller.GetPublicKey()
-//	address := types.AddressFromPubKey(pubkey)
-//
-//	pubkey1 := sender.GetPublicKey()
-//	address1 := types.AddressFromPubKey(pubkey1)
-//	fmt.Println("address", address.ToHexString(), address1.ToHexString())
-//
-//	res, err := sdk.Native.OntId.RegIDWithPublicKey(0, 20000, sender, controller.ID, controller)
-//	if err != nil {
-//		panic(err)
-//	}
-//
-//	hash := res.ToHexString()
-//	_, _ = sdk.WaitForGenerateBlock(3*time.Second, 1)
-//
-//	getRegOntId(hash)
-//}
-//
-//// 查询注册ontid时发送的事件
-//func getRegOntId(hash string) string {
-//	evt, err := sdk.GetSmartContractEvent(hash)
-//	if err != nil {
-//		panic(err)
-//	}
-//
-//	notify := evt.Notify[0]
-//	slice := notify.States.([]interface{})
-//	method := slice[0].(string)
-//	ontid := slice[1].(string)
-//	fmt.Println(method, ontid)
-//
-//	return ontid
-//}
+// 注册默认地址ontid
+func regOntId(passphrase string) {
+	pin := []byte(passphrase)
+
+	//scrypt := keypair.GetScryptParameters()
+	//identity, err := ontology_go_sdk.NewIdentity(scrypt)
+	identity, err := wallet.NewDefaultSettingIdentity(pin)
+	if err != nil {
+		panic(err)
+	}
+
+	controller, err := identity.GetControllerByIndex(1, pin)
+	if err != nil {
+		panic(err)
+	}
+	sender := ontology_go_sdk.NewAccount(controller.SigScheme)
+
+	pubkey := controller.GetPublicKey()
+	address := types.AddressFromPubKey(pubkey)
+
+	pubkey1 := sender.GetPublicKey()
+	address1 := types.AddressFromPubKey(pubkey1)
+	fmt.Println("address", address.ToHexString(), address1.ToHexString())
+
+	res, err := sdk.Native.OntId.RegIDWithPublicKey(0, 20000, sender, controller.ID, controller)
+	if err != nil {
+		panic(err)
+	}
+
+	hash := res.ToHexString()
+	_, _ = sdk.WaitForGenerateBlock(3*time.Second, 1)
+
+	getRegOntId(hash)
+}
+
+// 查询注册ontid时发送的事件
+func getRegOntId(hash string) string {
+	evt, err := sdk.GetSmartContractEvent(hash)
+	if err != nil {
+		panic(err)
+	}
+
+	notify := evt.Notify[0]
+	slice := notify.States.([]interface{})
+	method := slice[0].(string)
+	ontid := slice[1].(string)
+	fmt.Println(method, ontid)
+
+	return ontid
+}
